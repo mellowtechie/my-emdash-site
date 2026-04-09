@@ -15,12 +15,29 @@ const sortedPosts = posts.toSorted((a, b) => {
 	return dateB - dateA;
 });
 
-// Find the first post with a featured image for the hero
-const featuredPost = sortedPosts.find((p) => p.data.featured_image);
+// Find the first post with a featured image for the hero, or use the most recent post
+const postWithImage = sortedPosts.find((p) => p.data.featured_image);
+const featuredPost = postWithImage ?? sortedPosts[0]; // Fallback to most recent post
 const featuredIndex = featuredPost ? sortedPosts.indexOf(featuredPost) : -1;
+const hasFeaturedImage = !!featuredPost?.data.featured_image;
 
 // Get remaining posts (exclude featured if found, limit to 6 for grid)
 const gridPosts = sortedPosts.filter((_, i) => i !== featuredIndex).slice(0, 6);
+
+// Generate a consistent gradient for posts without images
+function getGradientFromTitle(str: string): { gradient: string; pattern: number } {
+	let hash = 0;
+	for (let i = 0; i < str.length; i++) {
+		hash = str.charCodeAt(i) + ((hash << 5) - hash);
+	}
+	const hue1 = Math.abs(hash % 360);
+	const hue2 = (hue1 + 40) % 360;
+	const pattern = Math.abs(hash % 4);
+	const gradient = `linear-gradient(135deg, hsl(${hue1}, 45%, 65%) 0%, hsl(${hue2}, 50%, 55%) 100%)`;
+	return { gradient, pattern };
+}
+
+const featuredGradient = featuredPost && !hasFeaturedImage ? getGradientFromTitle(featuredPost.data.title) : null;
 
 // Total posts shown = featured (if any) + grid posts
 const totalShown = (featuredPost ? 1 : 0) + gridPosts.length;
@@ -70,8 +87,8 @@ function formatDate(date: Date | null | undefined) {
 			</section>
 		) : (
 			<div class="home-content">
-				{/* Featured Post - Side by side */}
-				{featuredPost && (
+				{/* Featured Post - Side by side (with image) or full-width hero (without image) */}
+				{featuredPost && hasFeaturedImage && (
 					<section class="featured-section">
 						<div class="featured-grid">
 							<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
@@ -138,6 +155,65 @@ function formatDate(date: Date | null | undefined) {
 								)}
 							</div>
 						</div>
+					</section>
+				)}
+
+				{/* Featured Post - Typography-focused hero (no image) */}
+				{featuredPost && !hasFeaturedImage && (
+					<section class="featured-section featured-no-image">
+						<a href={`/posts/${featuredPost.id}`} class="hero-card">
+							<div 
+								class={`hero-gradient pattern-${featuredGradient?.pattern}`}
+								style={`background: ${featuredGradient?.gradient};`}
+							>
+								<div class="hero-pattern"></div>
+							</div>
+							<div class="hero-content">
+								<div class="hero-badge">Latest Post</div>
+								<h1 class="hero-title">{featuredPost.data.title}</h1>
+								{featuredPost.data.excerpt && (
+									<p class="hero-excerpt">{featuredPost.data.excerpt}</p>
+								)}
+								<div class="hero-meta">
+									{featuredBylines.length > 0 && (
+										<>
+											<div class="hero-bylines">
+												{featuredBylines.slice(0, 2).map((credit, index) => (
+													<>
+														{index > 0 && <span class="byline-sep">,</span>}
+														<span class="hero-byline">
+															{credit.byline.avatarMediaId && (
+																<img
+																	src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
+																	alt={credit.byline.displayName}
+																	class="hero-byline-avatar"
+																/>
+															)}
+															<span class="hero-byline-name">
+																{credit.byline.displayName}
+															</span>
+														</span>
+													</>
+												))}
+											</div>
+											<span class="meta-dot-light" />
+										</>
+									)}
+									{formatDate(featuredPost.data.publishedAt) && (
+										<time>{formatDate(featuredPost.data.publishedAt)}</time>
+									)}
+									<span class="meta-dot-light" />
+									<span>{getReadingTime(featuredPost.data.content)} min read</span>
+								</div>
+								{featuredTags.length > 0 && (
+									<div class="hero-tags">
+										{featuredTags.map((tag) => (
+											<span class="hero-tag">{tag.label}</span>
+										))}
+									</div>
+								)}
+							</div>
+						</a>
 					</section>
 				)}
 
@@ -329,6 +405,162 @@ function formatDate(date: Date | null | undefined) {
 		background: var(--color-border);
 	}
 
+	/* Featured Hero - No Image variant */
+	.featured-no-image {
+		margin-bottom: var(--spacing-16);
+	}
+
+	.hero-card {
+		display: block;
+		position: relative;
+		border-radius: var(--radius-xl);
+		overflow: hidden;
+		text-decoration: none;
+		color: white;
+		min-height: 400px;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.hero-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+	}
+
+	.hero-gradient {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+	}
+
+	.hero-pattern {
+		position: absolute;
+		inset: 0;
+		opacity: 0.15;
+	}
+
+	.pattern-0 .hero-pattern {
+		background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 0%, transparent 50%),
+			radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 40%);
+	}
+
+	.pattern-1 .hero-pattern {
+		background-image: repeating-linear-gradient(
+			45deg,
+			transparent,
+			transparent 30px,
+			rgba(255,255,255,0.08) 30px,
+			rgba(255,255,255,0.08) 60px
+		);
+	}
+
+	.pattern-2 .hero-pattern {
+		background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25) 0%, transparent 60%);
+	}
+
+	.pattern-3 .hero-pattern {
+		background-image: 
+			radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 0%, transparent 30%),
+			radial-gradient(circle at 75% 75%, rgba(255,255,255,0.15) 0%, transparent 30%);
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 2;
+		padding: var(--spacing-12) var(--spacing-10);
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		min-height: 400px;
+		background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+	}
+
+	.hero-badge {
+		display: inline-block;
+		width: fit-content;
+		padding: var(--spacing-1) var(--spacing-3);
+		background: rgba(255,255,255,0.2);
+		backdrop-filter: blur(10px);
+		border-radius: var(--radius);
+		font-size: var(--font-size-xs);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		margin-bottom: var(--spacing-4);
+	}
+
+	.hero-title {
+		font-size: clamp(var(--font-size-3xl), 5vw, var(--font-size-5xl));
+		font-weight: 700;
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--spacing-4);
+		max-width: 800px;
+	}
+
+	.hero-excerpt {
+		font-size: var(--font-size-lg);
+		line-height: var(--leading-relaxed);
+		opacity: 0.9;
+		max-width: 600px;
+		margin-bottom: var(--spacing-4);
+	}
+
+	.hero-meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--spacing-3);
+		font-size: var(--font-size-sm);
+		opacity: 0.85;
+	}
+
+	.meta-dot-light {
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		background: rgba(255,255,255,0.6);
+	}
+
+	.hero-bylines {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+	}
+
+	.hero-byline {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--spacing-2);
+	}
+
+	.hero-byline-avatar {
+		width: var(--avatar-size-sm);
+		height: var(--avatar-size-sm);
+		border-radius: 50%;
+		object-fit: cover;
+		border: 2px solid rgba(255,255,255,0.3);
+	}
+
+	.hero-byline-name {
+		font-weight: 500;
+	}
+
+	.hero-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-2);
+		margin-top: var(--spacing-4);
+	}
+
+	.hero-tag {
+		display: inline-block;
+		padding: var(--spacing-1) var(--spacing-3);
+		font-size: var(--font-size-sm);
+		background: rgba(255,255,255,0.15);
+		backdrop-filter: blur(10px);
+		border-radius: var(--radius);
+	}
+
 	/* Section header */
 	.section-header {
 		display: flex;
@@ -433,6 +665,15 @@ function formatDate(date: Date | null | undefined) {
 			grid-template-columns: repeat(2, 1fr);
 			gap: var(--spacing-8) var(--spacing-6);
 		}
+
+		.hero-content {
+			padding: var(--spacing-8) var(--spacing-6);
+			min-height: 350px;
+		}
+
+		.hero-card {
+			min-height: 350px;
+		}
 	}
 
 	@media (max-width: 600px) {
@@ -443,6 +684,23 @@ function formatDate(date: Date | null | undefined) {
 		.posts-grid {
 			grid-template-columns: 1fr;
 			gap: var(--spacing-8);
+		}
+
+		.hero-content {
+			padding: var(--spacing-6) var(--spacing-4);
+			min-height: 300px;
+		}
+
+		.hero-card {
+			min-height: 300px;
+		}
+
+		.hero-title {
+			font-size: var(--font-size-2xl);
+		}
+
+		.hero-excerpt {
+			font-size: var(--font-size-base);
 		}
 	}
 </style>

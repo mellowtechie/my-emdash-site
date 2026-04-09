@@ -31,6 +31,28 @@ const formattedDate = date
 			day: "numeric",
 		})
 	: null;
+
+// Generate a consistent gradient based on the title for posts without images
+function getGradientFromTitle(str: string): { gradient: string; pattern: number } {
+	let hash = 0;
+	for (let i = 0; i < str.length; i++) {
+		hash = str.charCodeAt(i) + ((hash << 5) - hash);
+	}
+	
+	// Generate hue values for a harmonious gradient
+	const hue1 = Math.abs(hash % 360);
+	const hue2 = (hue1 + 40) % 360; // Analogous color
+	const pattern = Math.abs(hash % 4); // 0-3 for different patterns
+	
+	// Use subtle, muted colors that work in both light and dark modes
+	const gradient = `linear-gradient(135deg, 
+		hsl(${hue1}, 45%, 65%) 0%, 
+		hsl(${hue2}, 50%, 55%) 100%)`;
+	
+	return { gradient, pattern };
+}
+
+const placeholderStyle = !featuredImage ? getGradientFromTitle(title) : null;
 ---
 
 <article class="post-card">
@@ -41,7 +63,17 @@ const formattedDate = date
 					<Image image={featuredImage} />
 				</div>
 			) : (
-				<div class="card-placeholder" />
+				<div 
+					class={`card-placeholder pattern-${placeholderStyle?.pattern}`}
+					style={`background: ${placeholderStyle?.gradient};`}
+				>
+					<div class="placeholder-content">
+						<svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+							<path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+					<div class="placeholder-pattern"></div>
+				</div>
 			)
 		}
 		<div class="card-body">
@@ -140,8 +172,65 @@ const formattedDate = date
 	.card-placeholder {
 		aspect-ratio: 16 / 10;
 		border-radius: var(--radius-lg);
-		background: var(--color-surface);
 		margin-bottom: var(--spacing-4);
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform 0.3s ease;
+	}
+
+	.card-link:hover .card-placeholder {
+		transform: scale(1.02);
+	}
+
+	.placeholder-content {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.placeholder-icon {
+		width: 48px;
+		height: 48px;
+		color: rgba(255, 255, 255, 0.7);
+		opacity: 0.9;
+	}
+
+	.placeholder-pattern {
+		position: absolute;
+		inset: 0;
+		opacity: 0.15;
+		z-index: 1;
+	}
+
+	/* Different subtle patterns for visual variety */
+	.pattern-0 .placeholder-pattern {
+		background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 0%, transparent 50%),
+			radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 40%);
+	}
+
+	.pattern-1 .placeholder-pattern {
+		background-image: repeating-linear-gradient(
+			45deg,
+			transparent,
+			transparent 20px,
+			rgba(255,255,255,0.1) 20px,
+			rgba(255,255,255,0.1) 40px
+		);
+	}
+
+	.pattern-2 .placeholder-pattern {
+		background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25) 0%, transparent 60%);
+	}
+
+	.pattern-3 .placeholder-pattern {
+		background-image: 
+			radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 0%, transparent 30%),
+			radial-gradient(circle at 75% 75%, rgba(255,255,255,0.15) 0%, transparent 30%);
 	}
 
 	.card-body {
