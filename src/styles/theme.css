@@ -91,6 +91,10 @@
 	--transition-fast: 120ms ease;
 	--transition-base: 180ms ease;
 	*/
+	
+	/* --- Logo ---
+	--logo-height: 40px;  /* Height of the logo in the header */
+	*/
 
 	/* --- Avatars ---
 	--avatar-size-xs: 18px;    card byline avatars
