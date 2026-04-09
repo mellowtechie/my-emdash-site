@@ -6,6 +6,16 @@
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
+	"routes": [
+		{
+			"pattern": "mellowtechie.com",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.mellowtechie.com",
+			"custom_domain": true
+		}
+	],
 	"d1_databases": [
 		{
 			"binding": "DB",
