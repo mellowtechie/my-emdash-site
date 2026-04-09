@@ -1,0 +1,399 @@
+{
+  "schema": {
+    "collections": [
+      {
+        "name": "posts",
+        "label": "Posts",
+        "singularLabel": "Post",
+        "fields": [
+          {
+            "name": "title",
+            "label": "Title",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "slug",
+            "label": "Slug",
+            "type": "string",
+            "required": true,
+            "unique": true
+          },
+          {
+            "name": "content",
+            "label": "Content",
+            "type": "rich_text"
+          },
+          {
+            "name": "excerpt",
+            "label": "Excerpt",
+            "type": "text"
+          },
+          {
+            "name": "featured_image",
+            "label": "Featured Image",
+            "type": "image"
+          },
+          {
+            "name": "published_at",
+            "label": "Published At",
+            "type": "datetime"
+          },
+          {
+            "name": "status",
+            "label": "Status",
+            "type": "select",
+            "options": [
+              {
+                "value": "draft",
+                "label": "Draft"
+              },
+              {
+                "value": "published",
+                "label": "Published"
+              }
+            ]
+          },
+          {
+            "name": "meta_title",
+            "label": "Meta Title",
+            "type": "string"
+          },
+          {
+            "name": "meta_description",
+            "label": "Meta Description",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "pages",
+        "label": "Pages",
+        "singularLabel": "Page",
+        "fields": [
+          {
+            "name": "title",
+            "label": "Title",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "slug",
+            "label": "Slug",
+            "type": "string",
+            "required": true,
+            "unique": true
+          },
+          {
+            "name": "content",
+            "label": "Content",
+            "type": "rich_text"
+          },
+          {
+            "name": "status",
+            "label": "Status",
+            "type": "select",
+            "options": [
+              {
+                "value": "draft",
+                "label": "Draft"
+              },
+              {
+                "value": "published",
+                "label": "Published"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "taxonomies": [
+      {
+        "name": "tags",
+        "label": "Tags",
+        "singularLabel": "Tag",
+        "collections": [
+          "posts"
+        ]
+      },
+      {
+        "name": "category",
+        "label": "Categories",
+        "singularLabel": "Category",
+        "collections": [
+          "posts"
+        ]
+      }
+    ]
+  },
+  "content": {
+    "posts": [
+      {
+        "id": "coming-soon",
+        "title": "Coming soon",
+        "slug": "coming-soon",
+        "content": [
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "This is Mellow Techie, a brand new site by Todd Murray that's just getting started. Things will be up and running here shortly, but you can subscribe in the meantime if you'd like to stay up to date and receive emails when new content is published!",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "excerpt": "",
+        "status": "published",
+        "published_at": "2025-08-03T17:27:47.000Z",
+        "meta_title": "Coming soon",
+        "meta_description": "",
+        "featured_image": {
+          "src": "https://static.ghost.org/v4.0.0/images/feature-image.jpg",
+          "alt": "Coming soon"
+        }
+      },
+      {
+        "id": "about",
+        "title": "About this site",
+        "slug": "about",
+        "content": [
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Mellow Techie is an independent publication launched in August 2025 by Todd Murray. If you subscribe today, you'll get full access to the website as well as email newsletters about new content when it's available. Your subscription makes this site possible, and allows Mellow Techie to continue to exist. Thank you!",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Access all areasBy signing up, you'll get access to the full archive of everything that's been published before and everything that's still to come. Your very own private library.",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Fresh content, deliveredStay up to date with new content sent straight to your inbox! No more worrying about whether you missed something because of a pesky algorithm or news feed.",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Meet people like youJoin a community of other subscribers who share the same interests.",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Start your own thingEnjoying the experience? Get started for free and set up your very own subscription business using Ghost, the same platform that powers this website.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "excerpt": "",
+        "status": "published",
+        "published_at": "2025-08-03T17:27:48.000Z",
+        "meta_title": "About this site",
+        "meta_description": ""
+      },
+      {
+        "id": "lets-try-this-again",
+        "title": "Lets try this again",
+        "slug": "lets-try-this-again",
+        "content": [
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "As with all tech people, we mess around a LOT! I'm no exception. I've been running a Plesk server in AWS Lightsail but it's old and the OS upgrades break Plesk and i'm not sure it's worth the money to run. So why not try something new and I'll just backup to a github repo from time ot time.",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "mindmap\n  root((perfect",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "tool))\n    Tests\n      Type\n        Unit-like\n        Quality\n      Library ready to use\n      Custom SQL\n      Report\n    Deployment\n      Opinionated",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "lifecycle \n      Integrates with git",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "PR, comments...\n        Downstream",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "changes\n      CICD pipelines\n\n    Ops \n      Schema",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "evolution\n      Integrates with",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "airflow\n      Supports multiple",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "databases\n      Data",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "update modes\n        Full\n        Incremental\n        Delta\n      Hands off\n    Development\n      IDE\n      Lineage\n        Column level\n      Macros",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "excerpt": "",
+        "status": "published",
+        "published_at": "2025-08-03T18:45:14.000Z",
+        "meta_title": "Lets try this again",
+        "meta_description": "",
+        "featured_image": {
+          "src": "__GHOST_URL__/content/images/2025/08/ghost-logo-dark.png",
+          "alt": "Lets try this again"
+        }
+      },
+      {
+        "id": "test",
+        "title": "Test",
+        "slug": "test",
+        "content": [
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "We'll put something here later",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "excerpt": "",
+        "status": "published",
+        "published_at": "2025-08-03T21:45:02.000Z",
+        "meta_title": "Test",
+        "meta_description": ""
+      }
+    ],
+    "pages": [],
+    "tags": [
+      {
+        "id": "news",
+        "name": "News",
+        "slug": "news",
+        "description": ""
+      },
+      {
+        "id": "guides",
+        "name": "Guides",
+        "slug": "guides",
+        "description": ""
+      }
+    ],
+    "category": [
+      {
+        "id": "general",
+        "name": "General",
+        "slug": "general",
+        "description": "General content"
+      }
+    ]
+  }
+}
