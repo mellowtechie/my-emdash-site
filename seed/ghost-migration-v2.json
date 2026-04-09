@@ -1,0 +1,423 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "meta": {
+    "name": "Ghost Migration",
+    "description": "Migrated content from Ghost CMS",
+    "author": "Migration Script"
+  },
+  "settings": {
+    "title": "Mellow Techie",
+    "tagline": "Tech thoughts and musings"
+  },
+  "collections": [
+    {
+      "slug": "posts",
+      "label": "Posts",
+      "labelSingular": "Post",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search",
+        "seo"
+      ],
+      "commentsEnabled": true,
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "featured_image",
+          "label": "Featured Image",
+          "type": "image"
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "searchable": true
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "slug": "pages",
+      "label": "Pages",
+      "labelSingular": "Page",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "searchable": true
+        }
+      ]
+    }
+  ],
+  "taxonomies": [
+    {
+      "name": "tag",
+      "label": "Tags",
+      "labelSingular": "Tag",
+      "hierarchical": false,
+      "collections": [
+        "posts"
+      ],
+      "terms": [
+        {
+          "slug": "news",
+          "label": "News"
+        },
+        {
+          "slug": "guides",
+          "label": "Guides"
+        }
+      ]
+    },
+    {
+      "name": "category",
+      "label": "Categories",
+      "labelSingular": "Category",
+      "hierarchical": true,
+      "collections": [
+        "posts"
+      ],
+      "terms": [
+        {
+          "slug": "general",
+          "label": "General"
+        }
+      ]
+    }
+  ],
+  "bylines": [],
+  "menus": [],
+  "content": {
+    "posts": [
+      {
+        "id": "ghost-post-1",
+        "slug": "coming-soon",
+        "status": "published",
+        "data": {
+          "title": "Coming soon",
+          "content": [
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "This is Mellow Techie, a brand new site by Todd Murray that's just getting started. Things will be up and running here shortly, but you can subscribe in the meantime if you'd like to stay up to date and receive emails when new content is published!"
+                }
+              ]
+            }
+          ],
+          "excerpt": "",
+          "featured_image": {
+            "$media": {
+              "url": "https://static.ghost.org/v4.0.0/images/feature-image.jpg",
+              "alt": "Coming soon",
+              "filename": "feature-image.jpg"
+            }
+          }
+        },
+        "taxonomies": {
+          "category": [
+            "general"
+          ],
+          "tag": []
+        }
+      },
+      {
+        "id": "ghost-post-2",
+        "slug": "about",
+        "status": "published",
+        "data": {
+          "title": "About this site",
+          "content": [
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Mellow Techie is an independent publication launched in August 2025 by Todd Murray. If you subscribe today, you'll get full access to the website as well as email newsletters about new content when it's available. Your subscription makes this site possible, and allows Mellow Techie to continue to exist. Thank you!"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Access all areas"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "By signing up, you'll get access to the full archive of everything that's been published before and everything that's still to come. Your very own private library."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Fresh content, delivered"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Stay up to date with new content sent straight to your inbox! No more worrying about whether you missed something because of a pesky algorithm or news feed."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Meet people like you"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Join a community of other subscribers who share the same interests."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Start your own thing"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Enjoying the experience? Get started for free and set up your very own subscription business using Ghost, the same platform that powers this website."
+                }
+              ]
+            }
+          ],
+          "excerpt": ""
+        },
+        "taxonomies": {
+          "category": [
+            "general"
+          ],
+          "tag": []
+        }
+      },
+      {
+        "id": "ghost-post-3",
+        "slug": "lets-try-this-again",
+        "status": "published",
+        "data": {
+          "title": "Lets try this again",
+          "content": [
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "As with all tech people, we mess around a LOT! I'm no exception. I've been running a Plesk server in AWS Lightsail but it's old and the OS upgrades break Plesk and i'm not sure it's worth the money to run. So why not try something new and I'll just backup to a github repo from time ot time."
+                }
+              ]
+            }
+          ],
+          "excerpt": "",
+          "featured_image": {
+            "$media": {
+              "url": "__GHOST_URL__/content/images/2025/08/ghost-logo-dark.png",
+              "alt": "Lets try this again",
+              "filename": "ghost-logo-dark.png"
+            }
+          }
+        },
+        "taxonomies": {
+          "category": [
+            "general"
+          ],
+          "tag": []
+        }
+      },
+      {
+        "id": "ghost-post-4",
+        "slug": "test",
+        "status": "published",
+        "data": {
+          "title": "Test",
+          "content": [
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "We'll put something here later"
+                }
+              ]
+            }
+          ],
+          "excerpt": ""
+        },
+        "taxonomies": {
+          "category": [
+            "general"
+          ],
+          "tag": []
+        }
+      }
+    ],
+    "pages": [
+      {
+        "id": "ghost-page-2",
+        "slug": "about",
+        "status": "published",
+        "data": {
+          "title": "About this site",
+          "content": [
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Mellow Techie is an independent publication launched in August 2025 by Todd Murray. If you subscribe today, you'll get full access to the website as well as email newsletters about new content when it's available. Your subscription makes this site possible, and allows Mellow Techie to continue to exist. Thank you!"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Access all areas"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "By signing up, you'll get access to the full archive of everything that's been published before and everything that's still to come. Your very own private library."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Fresh content, delivered"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Stay up to date with new content sent straight to your inbox! No more worrying about whether you missed something because of a pesky algorithm or news feed."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Meet people like you"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Join a community of other subscribers who share the same interests."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Start your own thing"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Enjoying the experience? Get started for free and set up your very own subscription business using Ghost, the same platform that powers this website."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
