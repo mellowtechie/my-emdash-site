@@ -1,0 +1,28 @@
+diff --git a/node_modules/@emdash-cms/auth/dist/index.mjs b/node_modules/@emdash-cms/auth/dist/index.mjs
+index 6990ae8..ee814bc 100644
+--- a/node_modules/@emdash-cms/auth/dist/index.mjs
++++ b/node_modules/@emdash-cms/auth/dist/index.mjs
+@@ -242,7 +242,7 @@ async function createInviteToken(config, adapter, email, role, invitedBy) {
+ 		invitedBy,
+ 		expiresAt: new Date(Date.now() + TOKEN_EXPIRY_MS$2)
+ 	});
+-	const url = new URL("/_emdash/api/auth/invite/accept", config.baseUrl);
++	const url = new URL("/_emdash/admin/invite/accept", config.baseUrl);
+ 	url.searchParams.set("token", token);
+ 	return {
+ 		url: url.toString(),
+diff --git a/node_modules/@emdash-cms/auth/src/invite.ts b/node_modules/@emdash-cms/auth/src/invite.ts
+index 0d34692..306b5a5 100644
+--- a/node_modules/@emdash-cms/auth/src/invite.ts
++++ b/node_modules/@emdash-cms/auth/src/invite.ts
+@@ -67,8 +67,8 @@ export async function createInviteToken(
+ 		expiresAt: new Date(Date.now() + TOKEN_EXPIRY_MS),
+ 	});
+ 
+-	// Build invite URL
+-	const url = new URL("/_emdash/api/auth/invite/accept", config.baseUrl);
++	// Build invite URL — point to admin UI page (not API endpoint)
++	const url = new URL("/_emdash/admin/invite/accept", config.baseUrl);
+ 	url.searchParams.set("token", token);
+ 
+ 	return { url: url.toString(), email };

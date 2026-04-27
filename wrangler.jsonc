@@ -6,6 +6,7 @@
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
+	"workers_dev": true,
 	"routes": [
 		{
 			"pattern": "mellowtechie.com",
@@ -16,6 +17,10 @@
 			"custom_domain": true
 		}
 	],
+	"vars": {
+		"EMAIL_FROM": "noreply@mellowtechie.com",
+		"EMAIL_FROM_NAME": "MellowTechie"
+	},
 	"d1_databases": [
 		{
 			"binding": "DB",
